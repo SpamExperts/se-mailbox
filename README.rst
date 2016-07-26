@@ -6,15 +6,15 @@ SpamExperts Mailbox Package
 .. image:: https://img.shields.io/pypi/v/se_mailbox.svg
         :target: https://pypi.python.org/pypi/se_mailbox
 
-.. image:: https://img.shields.io/travis/spamexperts/se_mailbox.svg
-        :target: https://travis-ci.org/tonyandrewmeyer/se_mailbox
+.. image:: https://img.shields.io/travis/SpamExperts/se_mailbox.svg
+        :target: https://travis-ci.org/SpamExperts/se_mailbox
 
 .. image:: https://readthedocs.org/projects/se-mailbox/badge/?version=latest
         :target: https://se-mailbox.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
-.. image:: https://pyup.io/repos/github/tonyandrewmeyer/se_mailbox/shield.svg
-     :target: https://pyup.io/repos/github/tonyandrewmeyer/se_mailbox/
+.. image:: https://pyup.io/repos/github/spamexperts/se_mailbox/shield.svg
+     :target: https://pyup.io/repos/github/spamexperts/se_mailbox/
      :alt: Updates
 
 
