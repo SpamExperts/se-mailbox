@@ -13,9 +13,19 @@ SpamExperts Mailbox Package
         :target: https://se-mailbox.readthedocs.io/en/latest/?badge=latest
         :alt: Documentation Status
 
+.. image:: https://codeclimate.com/github/SpamExperts/se-mailbox/badges/gpa.svg
+        :target: https://codeclimate.com/github/SpamExperts/se-mailbox
+
+.. image:: https://coveralls.io/repos/SpamExperts/se-mailbox/badge.svg?branch=master&service=github
+        :target: https://coveralls.io/github/SpamExperts/se-mailbox?branch=master
+
 .. image:: https://pyup.io/repos/github/spamexperts/se_mailbox/shield.svg
      :target: https://pyup.io/repos/github/spamexperts/se_mailbox/
      :alt: Updates
+
+.. image:: https://requires.io/github/SpamExperts/se-mailbox/requirements.svg?branch=master
+     :target: https://requires.io/github/SpamExperts/se-mailbox/requirements/?branch=master
+     :alt: Requirements Status
 
 
 Additional mailbox functionality.
