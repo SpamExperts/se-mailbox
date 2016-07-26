@@ -22,7 +22,7 @@ import mailbox
 import scandir
 
 from . import filelock
-import spamexperts.smaildir
+from . import smaildir
 
 
 class QuotaMixin(object):
