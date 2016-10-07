@@ -23,13 +23,7 @@ class Maildir(mailbox.Maildir):
 
     def list_folders(self):
         """Return a list of folder names."""
-        result = []
-        for entry in scandir.scandir(self._path):
-            entry = entry.name
-            if len(entry) > 1 and entry[0] == '.' and \
-               os.path.isdir(os.path.join(self._path, entry)):
-                result.append(entry[1:])
-        return result
+        return list(self.iter_folders)
 
     def iter_folders(self):
         """Return a generator of folder names."""
