@@ -42,17 +42,18 @@ class Maildir(mailbox.Maildir):
     def remove_folder(self, folder):
         """Delete the named folder, which must be empty."""
         path = os.path.join(self._path, '.' + folder)
-        for entry in scandir.scandir(os.path.join(path, 'new')):
-            if len(entry.name) < 1 or entry.name[0] != '.':
-                raise mailbox.NotEmptyError('Folder contains message(s): %s' %
-                                            folder)
-        for entry in scandir.scandir(os.path.join(path, 'cur')):
-            if len(entry.name) < 1 or entry.name[0] != '.':
-                raise mailbox.NotEmptyError('Folder contains message(s): %s' %
-                                            folder)
+        def raise_if_not_empty(subpath):
+            """Raise a NotEmptyError if the folder is not empty."""
+            for entry in scandir.scandir(os.path.join(path, subpath)):
+                if len(entry.name) < 1 or entry.name[0] != '.':
+                    raise mailbox.NotEmptyError(
+                        'Folder contains message(s): %s' % folder)
+        
+        raise_if_not_empty("new")
+        raise_if_not_empty("cur")
         for entry in scandir.scandir(path):
-            if entry.name != 'new' and entry.name != 'cur' and \
-               entry.name != 'tmp' and entry.is_dir():
+            if (entry.name != 'new' and entry.name != 'cur' and
+                   entry.name != 'tmp' and entry.is_dir()):
                 raise mailbox.NotEmptyError("Folder contains subdirectory "
                                             "'%s': %s" % (folder, entry))
         for root, dirs, files in scandir.walk(path, topdown=False):
