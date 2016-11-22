@@ -6,6 +6,6 @@ flake8==3.2.1
 tox==2.5.0
 coverage==4.2
 Sphinx==1.4.8
-cryptography==1.5.3
+cryptography==1.6
 PyYAML==3.12
 
