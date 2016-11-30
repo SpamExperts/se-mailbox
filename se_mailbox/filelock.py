@@ -72,7 +72,7 @@ class FileLock(object):
         if hasattr(self, "is_locked") and self.is_locked:
             os.close(self.fd)
             os.unlink(self.lockfile)
-            self.is_locked = Fals 
+            self.is_locked = False
 
     def __enter__(self):
         """Activated when used in the with statement.
