@@ -43,7 +43,7 @@ class Maildir(mailbox.Maildir):
                 if len(entry.name) < 1 or entry.name[0] != '.':
                     raise mailbox.NotEmptyError(
                         'Folder contains message(s): %s' % folder)
-        
+
         raise_if_not_empty("new")
         raise_if_not_empty("cur")
         for entry in scandir.scandir(path):
