@@ -195,7 +195,7 @@ class QuotaMixin(object):
             size.close()
 
 
-class SubclassableMaildir(spamexperts.smaildir.Maildir):
+class SubclassableMaildir(smaildir.Maildir):
     """A mailbox.Maildir class that is more easily subclassed."""
 
     def __init__(self, dirname, factory=None, create=True, access=0o700,
