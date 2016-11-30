@@ -36,6 +36,7 @@ class Maildir(mailbox.Maildir):
     def remove_folder(self, folder):
         """Delete the named folder, which must be empty."""
         path = os.path.join(self._path, '.' + folder)
+
         def raise_if_not_empty(subpath):
             """Raise a NotEmptyError if the folder is not empty."""
             for entry in scandir.scandir(os.path.join(path, subpath)):
