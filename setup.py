@@ -10,7 +10,7 @@ with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
 requirements = [
-    "scandir==1.9.0",
+    "scandir==1.10.0",
 ]
 
 test_requirements = [
