@@ -2,6 +2,7 @@
 
 """Read/write support for Maildir mailboxes."""
 
+
 import os
 import time
 import mailbox
@@ -23,7 +24,13 @@ class Maildir(mailbox.Maildir):
 
     def list_folders(self):
         """Return a list of folder names."""
-        return list(self.iter_folders)
+        result = []
+        for entry in scandir.scandir(self._path):
+            entry = entry.name
+            if len(entry) > 1 and entry[0] == '.' and \
+               os.path.isdir(os.path.join(self._path, entry)):
+                result.append(entry[1:])
+        return result
 
     def iter_folders(self):
         """Return a generator of folder names."""
@@ -36,19 +43,17 @@ class Maildir(mailbox.Maildir):
     def remove_folder(self, folder):
         """Delete the named folder, which must be empty."""
         path = os.path.join(self._path, '.' + folder)
-
-        def raise_if_not_empty(subpath):
-            """Raise a NotEmptyError if the folder is not empty."""
-            for entry in scandir.scandir(os.path.join(path, subpath)):
-                if len(entry.name) < 1 or entry.name[0] != '.':
-                    raise mailbox.NotEmptyError(
-                        'Folder contains message(s): %s' % folder)
-
-        raise_if_not_empty("new")
-        raise_if_not_empty("cur")
+        for entry in scandir.scandir(os.path.join(path, 'new')):
+            if len(entry.name) < 1 or entry.name[0] != '.':
+                raise mailbox.NotEmptyError('Folder contains message(s): %s' %
+                                            folder)
+        for entry in scandir.scandir(os.path.join(path, 'cur')):
+            if len(entry.name) < 1 or entry.name[0] != '.':
+                raise mailbox.NotEmptyError('Folder contains message(s): %s' %
+                                            folder)
         for entry in scandir.scandir(path):
-            if (entry.name != 'new' and entry.name != 'cur' and
-                   entry.name != 'tmp' and entry.is_dir()):
+            if entry.name != 'new' and entry.name != 'cur' and \
+               entry.name != 'tmp' and entry.is_dir():
                 raise mailbox.NotEmptyError("Folder contains subdirectory "
                                             "'%s': %s" % (folder, entry))
         for root, dirs, files in scandir.walk(path, topdown=False):

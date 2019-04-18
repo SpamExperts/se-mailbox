@@ -9,6 +9,7 @@
 
 import os
 import time
+import fcntl
 import errno
 
 
@@ -19,11 +20,10 @@ class FileLockException(Exception):
 
 class FileLock(object):
     """A file locking mechanism that has context-manager support so
-    you can use it in a with statement. This should be relatively cross
-    compatible as it doesn't rely on msvcrt or fcntl for the locking."""
+    you can use it in a with statement.
+    """
 
-    def __init__(self, file_name, timeout=10, delay=0.05, base=None,
-                 max_age=None):
+    def __init__(self, file_name, timeout=10, delay=0.05, base=None):
         """Prepare the file locker. Specify the file to lock and optionally
         the maximum timeout and the delay between each attempt to lock."""
         if base is None:
@@ -34,16 +34,6 @@ class FileLock(object):
         self.timeout = timeout
         self.delay = delay
         self.fd = None
-        if max_age and os.path.exists(self.lockfile):
-            # If the lock file is older than this, then remove it (we
-            # assume that the lock failed to be released when the process
-            # that acquired it completed).  If the lock file is removed
-            # during this check, nothing is wrong.
-            try:
-                if time.time() - os.stat(self.lockfile).st_mtime > max_age:
-                    os.remove(self.lockfile)
-            except OSError:
-                pass
 
     def acquire(self):
         """Acquire the lock, if possible. If the lock is in use, it check
@@ -53,10 +43,10 @@ class FileLock(object):
         start_time = time.time()
         while True:
             try:
-                self.fd = os.open(self.lockfile,
-                                  os.O_CREAT | os.O_EXCL | os.O_RDWR)
-            except OSError as e:
-                if e.errno != errno.EEXIST:
+                self.fd = open(self.lockfile, "w+b")
+                fcntl.flock(self.fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            except (OSError, IOError) as e:
+                if e.errno != errno.EWOULDBLOCK:
                     raise
                 if (time.time() - start_time) >= self.timeout:
                     raise FileLockException("Timeout occurred.")
@@ -70,8 +60,12 @@ class FileLock(object):
         When working in a `with` statement, this gets automatically called
         at the end."""
         if hasattr(self, "is_locked") and self.is_locked:
-            os.close(self.fd)
-            os.unlink(self.lockfile)
+            try:
+                self.fd.close()
+                os.unlink(self.lockfile)
+            except OSError as e:
+                if e.errno != errno.ENOENT:
+                    raise
             self.is_locked = False
 
     def __enter__(self):
