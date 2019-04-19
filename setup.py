@@ -10,7 +10,7 @@ with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
 requirements = [
-    "scandir==1.4",
+    "scandir==1.10",
 ]
 
 test_requirements = [
@@ -19,7 +19,7 @@ test_requirements = [
 
 setup(
     name='se_mailbox',
-    version='0.1.1',
+    version='0.1.2',
     description="Additional mailbox functionality.",
     long_description=readme + '\n\n' + history,
     author="SpamExperts B.V.",
@@ -38,12 +38,11 @@ setup(
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',
         'Natural Language :: English',
-        "Programming Language :: Python :: 2",
-        'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3',
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.7',
     ],
     test_suite='tests',
     tests_require=test_requirements

@@ -6,8 +6,8 @@ SpamExperts Mailbox Package
 .. image:: https://img.shields.io/pypi/v/se_mailbox.svg
         :target: https://pypi.python.org/pypi/se_mailbox
 
-.. image:: https://img.shields.io/travis/SpamExperts/se_mailbox.svg
-        :target: https://travis-ci.org/SpamExperts/se_mailbox
+.. image:: https://img.shields.io/travis/SpamExperts/se-mailbox.svg
+        :target: https://travis-ci.org/SpamExperts/se-mailbox
 
 .. image:: https://readthedocs.org/projects/se-mailbox/badge/?version=latest
         :target: https://se-mailbox.readthedocs.io/en/latest/?badge=latest
