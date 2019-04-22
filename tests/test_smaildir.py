@@ -88,6 +88,7 @@ class TestMaildir(unittest.TestCase):
             smaildir.Maildir("/test/path").remove_folder("ham")
 
     def test_clean(self):
+        """Test clean removes correct path."""
         files = self.mock_scandir_values(["test.file"])
         self.mock_scandir.return_value = files
         expired_timestamp = time.time() - 130000
@@ -99,6 +100,7 @@ class TestMaildir(unittest.TestCase):
         self.mock_remove.assert_called_with("/test/path/tmp/test.file")
 
     def test_clean_not_expired(self):
+        """Test clean does not expire recent files."""
         files = self.mock_scandir_values(["test.file"])
         self.mock_scandir.return_value = files
         patch("se_mailbox.smaildir.os.path.getatime",
