@@ -51,8 +51,8 @@ class Maildir(mailbox.Maildir):
                 raise mailbox.NotEmptyError('Folder contains message(s): %s' %
                                             folder)
         for entry in scandir.scandir(path):
-            if entry.name != 'new' and entry.name != 'cur' and \
-               entry.name != 'tmp' and entry.is_dir():
+            if (entry.name != 'new' and entry.name != 'cur'
+                    and entry.name != 'tmp' and entry.is_dir()):
                 raise mailbox.NotEmptyError("Folder contains subdirectory "
                                             "'%s': %s" % (folder, entry))
         for root, dirs, files in scandir.walk(path, topdown=False):
