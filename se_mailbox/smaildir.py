@@ -2,7 +2,6 @@
 
 """Read/write support for Maildir mailboxes."""
 
-
 import os
 import time
 import mailbox
