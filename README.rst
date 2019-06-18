@@ -37,7 +37,7 @@ Features
 
 * ``smaildir.Maildir`` offers support for maildir mailbox. It uses scandir() instead of listdir(). It also provides a new iter_folders() method that works like list_folders(), put provides a generator instead of returning a list.
 
-* ``se_mailbox.QuotaMixin`` implements the Maildir++ quota size system, as described here: http://www.inter7.com/courierimap/README.maildirquota.html. Quotas are not enforced - this would be good to add, but since we do a non-standard operation (dropping old data instead of failing to add) there's not much point.
+* ``se_mailbox.QuotaMixin`` implements the Maildir++ quota size system, as described here: http://www.inter7.com/courierimap/README.maildirquota.html. Quotas are not enforced - this would be good to add
 
 * ``se_mailbox.SubclassableMaildir`` implements a mailbox.Maildir class that is more easily subclassed.
 
