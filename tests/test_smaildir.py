@@ -5,6 +5,19 @@ from mock import patch, MagicMock
 from se_mailbox import smaildir
 
 
+def mock_scandir_values(names):
+    """Helper function for mocking scandir.scandir results
+    with given names."""
+    folders = []
+    for name in names:
+        # name is an argument to the Mock constructor
+        folder = MagicMock()
+        folder.configure_mock(name=name)
+        folders.append(folder)
+
+    return folders
+
+
 class TestMaildir(unittest.TestCase):
     """Tests for the smaildir.Maildir class."""
 
@@ -21,21 +34,9 @@ class TestMaildir(unittest.TestCase):
     def tearDown(self):
         patch.stopall()
 
-    def mock_scandir_values(self, names):
-        """Helper function for mocking scandir.scandir results
-        with given names."""
-        folders = []
-        for name in names:
-            # name is an argument to the Mock constructor
-            folder = MagicMock()
-            folder.configure_mock(name=name)
-            folders.append(folder)
-
-        return folders
-
     def test_list_folders(self):
         """Test list_folders functionality."""
-        folders = self.mock_scandir_values([".", ".spam", ".ham", "test"])
+        folders = mock_scandir_values([".", ".spam", ".ham", "test"])
         self.mock_scandir.return_value = folders
 
         result = smaildir.Maildir("/test/path").list_folders()
@@ -43,7 +44,7 @@ class TestMaildir(unittest.TestCase):
 
     def test_iter_folders(self):
         """Test iter_folders functionality."""
-        folders = self.mock_scandir_values([".", ".spam", ".ham", "test"])
+        folders = mock_scandir_values([".", ".spam", ".ham", "test"])
         self.mock_scandir.return_value = folders
 
         result = smaildir.Maildir("/test/path").iter_folders()
@@ -53,7 +54,7 @@ class TestMaildir(unittest.TestCase):
         """Test remove_folder functionality."""
         # assume there's nothing in any folder (new or cur)
         # and only the new, cur and tmp subfolders in path
-        folders = self.mock_scandir_values(["cur", "new", "tmp"])
+        folders = mock_scandir_values(["cur", "new", "tmp"])
         self.mock_scandir.side_effect = [[], [], folders]
         self.mock_walk.return_value = [("/test/path", ["new", "cur", "tmp"], [])]
 
@@ -64,7 +65,7 @@ class TestMaildir(unittest.TestCase):
 
     def test_remove_folder_new_messages(self):
         """Test remove_folder when there are files in the new folder."""
-        files = self.mock_scandir_values(["test_message.file"])
+        files = mock_scandir_values(["test_message.file"])
         self.mock_scandir.return_value = files
 
         with self.assertRaises(smaildir.mailbox.NotEmptyError):
@@ -72,7 +73,7 @@ class TestMaildir(unittest.TestCase):
 
     def test_remove_folder_cur_messages(self):
         """Test remove_folder when there are files in the cur folder."""
-        files = self.mock_scandir_values(["test_message.file"])
+        files = mock_scandir_values(["test_message.file"])
         self.mock_scandir.side_effect = [[], files]
 
         with self.assertRaises(smaildir.mailbox.NotEmptyError):
@@ -81,7 +82,7 @@ class TestMaildir(unittest.TestCase):
     def test_remove_folder_with_subdirectories(self):
         """Test remove_folder when there are subdirectories in the folder."""
         names = ["cur", "new", "tmp", "test"]
-        folders = self.mock_scandir_values(names)
+        folders = mock_scandir_values(names)
         self.mock_scandir.side_effect = [[], [], folders]
 
         with self.assertRaises(smaildir.mailbox.NotEmptyError):
@@ -89,7 +90,7 @@ class TestMaildir(unittest.TestCase):
 
     def test_clean(self):
         """Test clean removes correct path."""
-        files = self.mock_scandir_values(["test.file"])
+        files = mock_scandir_values(["test.file"])
         self.mock_scandir.return_value = files
         expired_timestamp = time.time() - 130000
         patch("se_mailbox.smaildir.os.path.getatime",
@@ -101,7 +102,7 @@ class TestMaildir(unittest.TestCase):
 
     def test_clean_not_expired(self):
         """Test clean does not expire recent files."""
-        files = self.mock_scandir_values(["test.file"])
+        files = mock_scandir_values(["test.file"])
         self.mock_scandir.return_value = files
         patch("se_mailbox.smaildir.os.path.getatime",
               return_value=time.time()).start()
