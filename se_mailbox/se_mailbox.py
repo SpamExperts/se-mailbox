@@ -145,18 +145,9 @@ class QuotaMixin(object):
         total_size = 0
         total_count = 0
         for i, line in enumerate(open(self.size_fn).readlines()[1:]):
-            if not line or len(line.split()) != 2:
-                continue
-            size, count = line.strip().split()
-            # Sentry Error size is empty string ''
-            if not size or not count:
-                continue
-            try:
-                total_size += int(size)
-                total_count += int(count)
-            except ValueError:
-                # Corrupted size file somehow
-                continue
+            size, count = line.split()
+            total_size += int(size)
+            total_count += int(count)
         if (((self.count_quota and total_count > self.count_quota) or
              (self.size_quota and total_size > self.size_quota)) and
                 (i == 0 or (time.time() - size_stat.st_mtime) > 15 * 60)):
