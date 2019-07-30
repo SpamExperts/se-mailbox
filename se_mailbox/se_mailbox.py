@@ -160,14 +160,13 @@ class QuotaMixin(object):
         self.count_quota = None
         if not os.path.exists(self.size_fn):
             return
-        size = open(self.size_fn, "r")
-        try:
-            quotas = size.next().strip().split(",")
-        except StopIteration:
-            # Either the file is invalid or another process is updating
-            # it right now.
-            return
-        size.close()
+        with open(self.size_fn, "r") as size:
+            try:
+                quotas = size.readline().strip().split(",")
+            except StopIteration:
+                # Either the file is invalid or another process is updating
+                # it right now.
+                return
         for quota in quotas:
             if not quota:
                 continue
