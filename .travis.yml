@@ -1,15 +1,12 @@
 # Config file for automatic testing at travis-ci.org
 # This file will be regenerated if you run travis_pypi_setup.py
 
+dist: xenial
 language: python
-python: 3.5
+python: 3.7
 
 env:
-  - TOXENV=py35
-  - TOXENV=py34
-  - TOXENV=py33
-  - TOXENV=py27
-  - TOXENV=pypy
+  - TOXENV=py37
 
 # command to install dependencies, e.g. pip install -r requirements.txt --use-mirrors
 install: pip install -U tox
@@ -28,4 +25,4 @@ deploy:
   on:
     tags: true
     repo: spamexerts/se-mailbox
-    condition: $TOXENV == py27
+    condition: $TOXENV == py37
