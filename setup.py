@@ -20,11 +20,11 @@ test_requirements = [
 
 setup(
     name='se_mailbox',
-    version='0.1.2',
+    version='1.0.0',
     description="Additional mailbox functionality.",
     long_description=readme + '\n\n' + history,
-    author="SpamExperts B.V.",
-    author_email='support@spamexperts.com',
+    author="SolarWinds Mail WG",
+    author_email='mail-plg-engineering@solarwinds.com',
     url='https://github.com/spamexperts/se-mailbox',
     packages=[
         'se_mailbox',

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
 
-__author__ = 'SpamExperts B.V.'
-__email__ = 'support@spamexperts.com'
-__version__ = '0.1.1'
+__author__ = 'SolarWinds Mail WG'
+__email__ = 'mail-plg-engineering@solarwinds.com'
+__version__ = '1.0.0'
