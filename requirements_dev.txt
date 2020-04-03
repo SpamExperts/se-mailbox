@@ -1,6 +1,6 @@
 bumpversion==0.5.3
 coverage==4.5.3
-cryptography==2.6.1
+cryptography==2.9
 flake8==3.7.8
 mock==3.0.5
 pip==19.2
