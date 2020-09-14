@@ -15,7 +15,7 @@ requirements = [
 
 test_requirements = [
     "mock==3.0.5",
-    "pytest==4.4.1",
+    "pytest==6.0.2",
 ]
 
 setup(
