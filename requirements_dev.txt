@@ -2,7 +2,7 @@ bumpversion==0.5.3
 coverage==4.5.3
 flake8==3.7.8
 mock==3.0.5
-pip==20.3.3
+pip==21.0.1
 pytest==4.4.1
 PyYAML==5.1.1
 Sphinx==3.5.1
