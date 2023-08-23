@@ -23,8 +23,8 @@ setup(
     version='1.0.0',
     description="Additional mailbox functionality.",
     long_description=readme + '\n\n' + history,
-    author="SolarWinds Mail WG",
-    author_email='mail-plg-engineering@solarwinds.com',
+    author="N-able Mail WG",
+    author_email='mail-plg-engineering@n-able.com',
     url='https://github.com/spamexperts/se-mailbox',
     packages=[
         'se_mailbox',
